@@ -15,13 +15,24 @@
 // `cargo build --lib` without any build errors or warnings. Then go to main.rs and continue with #2
 
 // pub enum DolphinError...
-
+use thiserror::Error;
 pub struct Dolphin {
     pub name: String,
     pub age: u8,
     pub hungry: bool,
 }
 
+#[derive(Debug, Error)]
+#[non_exhaustive]
+pub enum DolphinError {
+    #[error("Dolphin is hungry")]
+    Hungry,
+    #[error("Dolphin is too young")]
+    TooYoung,
+    #[error("Dolphin name is tool long")]
+    LongName,
+
+}
 
 impl Dolphin {
     pub fn say_your_name(&self) -> Result<String, DolphinError> {
